@@ -1,0 +1,127 @@
+DESCRIPTION
+===========
+
+This project is to allow you to create diffraction gratings on most (all?) HP PCL
+compatible NETWORK CONNECTED laser printers.
+
+To see what these grating can do, watch 
+"Let's Measure the Wavelength of Light - with NO lab equipment!" 
+https://youtu.be/WwQXQrm33JM
+
+This means the printer must support the HP PCL page description language 
+(most laser printers do) and support the raw printer access on network 
+port 9100. This also known as  JetDirect, AppSocket, or Windows TCPmon.
+
+You need to know your printer's IP number. 
+
+This will not work with USB or otherwise connected printers. The application
+uses the direct network connection to the printer in order to bypass the
+operating systems printer drivers. This provides access to low level
+hardware pixel drawing on the printer. 
+
+I have included both source files (so you can modify if needed) and and compiled files
+so you can "just run it". You will need java installed on your computer. 
+
+
+TO MODIFY THE SOURCE
+====================
+
+The source is (surprizingly enough) in the directory called Source. There are two java
+files, each a complete self contained command line application.
+
+Generate_Diffraction_Grating.java will create a diffraction grating pattern and either 
+save it to a file or send it to the printer without saving. At around line 200 you can specifiy 
+the dpi the grting will be printed at and also the bit/pixel pattern to use. See the video
+referenced above for details on different patterns. 
+
+Network_Print.java will take a previopusly saved file and send it to the printer.
+
+I used eclipse to create runnable jar files from these source files. The source 
+file should worth with whatever your favorite java compiler and sdevelopment 
+environment is. 
+
+
+I JUST WANT TO RUN IT
+=====================
+
+The executables are in the Runnables directory.
+
+Generate_Diffraction_Grating.jar will create a diffraction grating pattern and either 
+save it to a file or send it to the printer without saving.  
+
+Network_Print.java will take a previopusly saved file and send it to the printer.
+
+You need to run these appliations on the command line in a terminal window. Run "cmd" 
+on a windows machine and cd to the directory where you dumped these files. 
+
+To create and send a 600 dpi grating directly to your printer, do
+					 
+			   java -jar Generate_Diffraction_Grating.jar -print printers_IP_number 
+
+example: 
+
+        java -jar Generate_Diffraction_Grating.jar -print 192.168.1.245 
+
+Note: you have to replace 192.168.1.245 with the IP number of your printer. 
+
+
+To send a previously generated grating directly to your printer, do
+
+        java -jar Network_Print.jar filename printers_IP_number 
+
+example: 
+     
+        java -jar Network_Print.jar diffraction_grating.prn 192.168.1.245 
+			
+Note: you have to replace 192.168.1.245 with the IP number of your printer. 
+
+I have provided the following diffraction grating pattern files in the package
+that you can use in place of diffraction_grating.prn above:
+
+diffraction_grating_300dpi_1010101.prn
+
+Prints at 300 dpi a pattern of alternating black and white stripes like this 
+(white to white line/slit distance is 169 micro meters):
+
+0101010101010 ...
+0101010101010 ...
+0101010101010 ...
+
+
+
+diffraction_grating_600dpi_1001001.prn
+
+Prints at 600 dpi a pattern of alternating black stipes followed by two white stripes 
+like this (white to white line/slit distance is 127 micro meters):
+
+1001001001001 ...
+1001001001001 ...
+1001001001001 ...
+
+The double size white stripes make up for the black pixels bleeding into the white areas. 
+
+
+WINDOWS USERS
+=============
+
+For windows users, I have incuded som batch files that should do the above for you just 
+by clicking on them assuming they are in the same direcotry as the .jar and .prn files.
+
+
+generate_and_print_600dpi_1001001.bat makes the 600dpi_1001001 grating described above 
+and sends it directory to the printer without saving it to a file. You need to edit .bat 
+the file with Notepad or similar to change the ip number in the batch file to your 
+printers ip number before running this batch file. 
+
+print_file_300dpi_1010101.bat reads the file diffraction_grating_300dpi_1010101.prn and 
+and sends it directory to the printer without saving it to a file. You need to edit .bat 
+the file with Notepad or similar to change the ip number in the batch file to your 
+printers ip number before running this batch file. 
+
+print_file_600dpi_1001001.bat reads the file diffraction_grating_600dpi_1001001.prn and 
+and sends it directory to the printer without saving it to a file. You need to edit .bat 
+the file with Notepad or similar to change the ip number in the batch file to your 
+printers ip number before running this batch file. 
+ 
+
+
